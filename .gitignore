@@ -5,8 +5,11 @@
 node_modules/
 userscripts/
 .vscode
+coverage/
 
 # FILES
 yarn.lock
 *.url
 *.lnk
+.replit
+package-lock.json

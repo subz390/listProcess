@@ -92,7 +92,7 @@ describe('parameter validation', () => {
 
 // ================================================================================
 // TESTS FOR 100% COVERAGE
-// yarn test:coverage sprintf
+// npm jest --coverage
 // then open /coverage/lcov-report/index.html with Live server in VScode
 
 // Test either side of if statements, even when typical use invokes the one side

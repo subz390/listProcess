@@ -15,7 +15,7 @@
   },
   "dependencies": {},
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": "https://github.com/subz390/listProcess.git"
 }
