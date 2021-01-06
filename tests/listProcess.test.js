@@ -40,7 +40,7 @@ describe('parameter validation', () => {
       })
     })
   })
-  describe('itemProcessor should reject', () => {
+  describe('itemProcessor property should reject', () => {
     test('when undefined', () => {
       return listProcess({promiseMethod: 'all', listObject: listObject})
       .catch((error) => {
@@ -54,7 +54,7 @@ describe('parameter validation', () => {
       })
     })
   })
-  describe('listObject should reject', () => {
+  describe('listObject property should reject', () => {
     test('when undefined and default null', () => {
       return listProcess({promiseMethod: 'all', itemProcessor: itemProcessor})
       .catch((error) => {
@@ -74,7 +74,7 @@ describe('parameter validation', () => {
       })
     })
   })
-  describe('promiseMethod should reject', () => {
+  describe('promiseMethod property should reject', () => {
     test('when empty string', () => {
       return listProcess({promiseMethod: '', listObject: listArray, itemProcessor: itemProcessor})
       .catch((error) => {
@@ -88,12 +88,15 @@ describe('parameter validation', () => {
       })
     })
   })
+  // TODO debug property, should pass default debug = false through to final result
+  // TODO debug property, should pass debug set value to final result
 })
 
 // ================================================================================
 // TESTS FOR 100% COVERAGE
 // npm jest --coverage
-// then open /coverage/lcov-report/index.html with Live server in VScode
+// then open /coverage/lcov-report/index.html with Live server in VScode when run locally
+// TODO add notes for repl.it implementation
 
 // Test either side of if statements, even when typical use invokes the one side
 // Test calling debug statements
@@ -114,6 +117,9 @@ describe('minimum for 100% coverage', () => {
       .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
+  // TODO Promise 'allSettled' method
+  // TODO Promise 'any' method
+  // TODO Promise 'race' method
 })
 
 
