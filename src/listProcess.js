@@ -42,7 +42,9 @@
  */
 export function listProcess({promiseMethod = 'allSettled', listObject = null, itemProcessor = undefined, debug = false} = {}) {
   if (typeof itemProcessor !== 'function') return Promise.reject(Error('itemProcessor should be a function'))
-  if ((listObject == null) || (Array.isArray(listObject) && listObject.length === 0) || (Object.keys(listObject).length === 0)) {return Promise.reject(Error('listObject cannot be empty'))}
+  if ((listObject == null) || (Array.isArray(listObject) && listObject.length === 0) || (Object.keys(listObject).length === 0)) {
+    return Promise.reject(Error('listObject cannot be empty'))
+  }
   if (['all', 'allSettled', 'any', 'race'].includes(promiseMethod)) {
     const promisesArray = []
     for (const [key, property] of Object.entries(listObject)) {
