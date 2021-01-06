@@ -13,5 +13,5 @@ app.use((request, response, next) => {
 
 app.listen(port, (error) => {
   if (error) {return console.log(error)}
-  console.log(`server is listening on port: ${port}`)
+  console.log(`Web server started: You can view the coverage report being served as a web page if running on a local computer at http://localhost:${port} or on repl.it refresh the web view browser.`)
 })

@@ -1,6 +1,6 @@
 {
   "name": "listprocess",
-  "version": "1.2.3",
+  "version": "1.2.6",
   "description": "Learn how to unit test pure Promise based functions with Jest",
   "main": "./src/index.js",
   "author": "SubZ390 <11546815+subz390@users.noreply.github.com> (https://github.com/subz390)",
@@ -19,7 +19,8 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "serve": "node index.js"
+    "serve": "node index.js",
+    "test+serve": "jest --coverage && node index.js"
   },
   "repository": "https://github.com/subz390/listProcess.git"
 }
