@@ -20,25 +20,25 @@
  * @manual https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
  * @manual https://stackoverflow.com/questions/61732049/what-is-the-difference-between-promise-any-and-promise-race
  * @example
-  * listProcess({
-  *   promiseMethod: 'any',
-  *   debug: true,
-  *   // listObject: [{}, {}, {}],
-  *   listObject: {a: {}, b: {}, c: {}},
-  *   itemProcessor: (resolve, reject, key, item, debug) => {
-  *     debug && console.log(key, item)
-  *     // return reject(new Error(`some error: ${key}`))
-  *     // what you return resolve here gets passed to listProcess().then({key, debug, message})
-  *     // if `promiseMethod: 'all'` .then(resultArray) is an array of returned resolves from each of the above
-  *     return resolve({key: key, debug: debug, message: ''})
-  *   }
-  * })
-  * .then(({key, debug, message}) => {debug && console.log(`key ${key}`)})
-  * .catch((reason) => {
-  *   // when all Promise items fail to match you get an errors object
-  *   if (reason.errors) {console.log(`Promise.any: rejected with\n${reason.errors.map(({message}) => message).join('\n')}`)}
-  *   else {console.error(reason)}
-  * })
+ * listProcess({
+ *   promiseMethod: 'any',
+ *   debug: true,
+ *    // listObject: [{}, {}, {}],
+ *    listObject: {a: {}, b: {}, c: {}},
+ *    itemProcessor: (resolve, reject, key, item, debug) => {
+ *      debug && console.log(key, item)
+ *      // return reject(new Error(`some error: ${key}`))
+ *      // what you return resolve here gets passed to listProcess().then({key, debug, message})
+ *      // if `promiseMethod: 'all'` .then(resultArray) is an array of returned resolves from each of the above
+ *      return resolve({key: key, debug: debug, message: ''})
+ *    }
+ *  })
+ *  .then(({key, debug, message}) => {debug && console.log(`key ${key}`)})
+ *  .catch((reason) => {
+ *    // when all Promise items fail to match you get an errors object
+ *    if (reason.errors) {console.log(`Promise.any: rejected with\n${reason.errors.map(({message}) => message).join('\n')}`)}
+ *    else {console.error(reason)}
+ *  })
  */
 export function listProcess({promiseMethod = 'allSettled', listObject = null, itemProcessor = undefined, debug = false} = {}) {
   if (typeof itemProcessor !== 'function') return Promise.reject(Error('itemProcessor should be a function'))
@@ -48,10 +48,9 @@ export function listProcess({promiseMethod = 'allSettled', listObject = null, it
   if (['all', 'allSettled', 'any', 'race'].includes(promiseMethod)) {
     const promisesArray = []
     for (const [key, property] of Object.entries(listObject)) {
-      const task = new Promise((resolve, reject) => {
+      promisesArray.push(new Promise((resolve, reject) => {
         return itemProcessor(resolve, reject, key, property, debug)
-      })
-      promisesArray.push(task)
+      }))
     }
     return Promise[promiseMethod](promisesArray)
   }

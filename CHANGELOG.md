@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 210107
+- 1.3.0 finished writing unit tests
+
 ## 210106
 - 1.2.6 documentation
 - 1.2.5 add `test+serve` script
