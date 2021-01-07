@@ -52,7 +52,23 @@ export function listProcess({promiseMethod = 'allSettled', listObject = null, it
         return itemProcessor(resolve, reject, key, property, debug)
       }))
     }
-    return Promise[promiseMethod](promisesArray)
+    // return Promise[promiseMethod](promisesArray)
+    // all this because on NodeJS v10.23.0 it doesn't like the above
+    // it works fine on NodeJS v15.5.1
+    switch (promiseMethod) {
+      case 'any':
+        return Promise.any(promisesArray)
+        break
+      case 'allSettled':
+        return Promise.allSettled(promisesArray)
+        break
+      case 'all':
+        return Promise.all(promisesArray)
+        break
+      case 'race':
+        return Promise.race(promisesArray)
+        break
+    }
   }
   else {return Promise.reject(Error('unrecognised promiseMethod'))}
 }

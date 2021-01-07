@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 210107
+- 1.3.1 removed support on repl.it because their version of node doesn't support Promises
 - 1.3.0 finished writing unit tests
 
 ## 210106
