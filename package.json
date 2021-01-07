@@ -19,9 +19,9 @@
   },
   "scripts": {
     "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage --collectCoverageFrom=./src/listProcess.js",
     "serve": "node index.js",
-    "test+serve": "jest --coverage && node index.js"
+    "test+serve": "jest --coverage --collectCoverageFrom=./src/listProcess.js && node index.js"
   },
   "repository": "https://github.com/subz390/listProcess.git"
 }
