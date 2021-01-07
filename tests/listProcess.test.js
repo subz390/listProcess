@@ -1,6 +1,11 @@
 import {listProcess} from '../src/listProcess.js'
 import {consoleMock} from './jestHelpers.js'
 
+// https://babeljs.io/docs/en/babel-preset-env#corejs
+// to support janky old NodeJS installations
+import 'core-js/modules/es.promise'
+// import 'regenerator-runtime/runtime'
+
 // ================================================================================
 // TEST NOTES
 // all the returns are to pass the Promise back up through the function calling chain
