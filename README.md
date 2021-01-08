@@ -1,4 +1,7 @@
 # Jest Testing Promises
+[![MIT License](https://img.shields.io/github/license/subz390/listProcess)](https://github.com/subz390/listProcess/blob/main/LICENSE.md)
+[![Language](https://img.shields.io/github/languages/top/subz390/listprocess)](https://github.com/subz390/listProcess/search?l=javascript)
+[![Repl.it](https://img.shields.io/badge/Repl.it-listProcess-lightgrey)](https://repl.it/@subz390/listProcess#README.md)
 
 This is a small project I created on writing Jest unit tests for pure Promise based functions in JavaScript.
 
@@ -8,8 +11,9 @@ Contributions are welcome, however before submitting a Pull Request please begin
 ## How To Run the Tests
 
 ### Online
-- I've installed the project over on [Repl.it](https://repl.it/@subz390/listProcess#README.md)
-- Click the Run button, and also run the scripts listed below
+- Head over to [![Repl.it](https://img.shields.io/badge/Repl.it-listProcess-lightgrey)](https://repl.it/@subz390/listProcess#README.md)
+- Click the Run button, wait for 15-30 seconds for the slow public server to do its thing
+- Or, manually run the scripts listed below.
 
 ### Locally
 - Requirements: you'll need to have [NodeJS](https://nodejs.org/en/download/) and [Git](https://git-scm.com/) installed
