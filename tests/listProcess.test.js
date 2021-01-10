@@ -1,12 +1,14 @@
-import {listProcess} from '../src/listProcess.js'
+import {listProcess} from '../src/library/listProcess.js'
 import {consoleMock} from './jestHelpers.js'
 
-// to support geriatric old NodeJS installations with polyfilled dentures where needed
+// Support old NodeJS installations with polyfills where needed
+// yarn add --dev core-js regenerator-runtime
 // https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md#babel
 // https://babeljs.io/docs/en/babel-preset-env#corejs
 // https://stackoverflow.com/questions/52625979/confused-about-usebuiltins-option-of-babel-preset-env-using-browserslist-integ
 // https://stackoverflow.com/questions/62087809/babel-usebuiltins-usage-failing-with-core-js-3
 import 'core-js/stable'
+// https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime
 import 'regenerator-runtime/runtime'
 
 // ================================================================================
