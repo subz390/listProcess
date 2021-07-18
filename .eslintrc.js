@@ -1,23 +1,26 @@
+// https://eslint.org/blog/2020/07/eslint-v7.5.0-released#optional-chaining-support
+// https://eslint.org/docs/user-guide/configuring
 module.exports = {
   env: {
     browser: true,
     es6: true
   },
-  // https://github.com/sveltejs/eslint-plugin-svelte3
-  // plugins: ['svelte3'],
-  extends: ['google'],
+  plugins: [
+    // 'html', // https://github.com/BenoitZugmeyer/eslint-plugin-html
+    // 'svelte3', // https://github.com/sveltejs/eslint-plugin-svelte3
+  ],
+  extends: ['google'], // https://github.com/google/eslint-config-google
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     sourceType: 'module'
   },
   rules: {
     'brace-style': ['error', 'stroustrup', {allowSingleLine: true}], // https://eslint.org/docs/rules/brace-style
-    // https://eslint.org/docs/rules/comma-dangle unexpected trailing comma
-    'comma-dangle': ['error', {arrays: 'only-multiline', objects: 'only-multiline', imports: 'never', exports: 'never', functions: 'never'}],
+    'comma-dangle': ['error', {arrays: 'only-multiline', objects: 'only-multiline', imports: 'never', exports: 'never', functions: 'never'}], // https://eslint.org/docs/rules/comma-dangle unexpected trailing comma
     indent: ['error', 2, {MemberExpression: 0, ArrayExpression: 'first', ObjectExpression: 'first', SwitchCase: 1}], // https://eslint.org/docs/rules/indent
     'arrow-parens': ['error', 'as-needed', {requireForBlockBody: true}], // https://eslint.org/docs/rules/arrow-parens always | as-needed
     'linebreak-style': ['error', 'windows'], // https://eslint.org/docs/rules/linebreak-style
@@ -29,13 +32,11 @@ module.exports = {
     'quote-props': ['error', 'as-needed'], // https://eslint.org/docs/rules/quote-props always | as-needed | consistent | consistent-as-needed
     quotes: ['error', 'single'], // https://eslint.org/docs/rules/quotes
     'require-jsdoc': 0,
-    semi: ['error', 'never'] // https://eslint.org/docs/rules/semi
+    semi: ['error', 'never'], // https://eslint.org/docs/rules/semi
+    'eol-last': ['warn', 'never'] // https://eslint.org/docs/rules/eol-last
   },
-  // Disabling Rules Only for a Group of Files
   overrides: [
-    // https://github.com/sveltejs/eslint-plugin-svelte3
-    // {files: ['**/*.svelte'], processor: 'svelte3/svelte3'}
-    // https://eslint.org/docs/user-guide/configuring#disabling-rules-only-for-a-group-of-files
-    // {files: ['*-test.js', '*.spec.js'], rules: {'no-unused-expressions': 'off'}}
+    // {files: ['**/*.svelte'], processor: 'svelte3/svelte3'}, // https://github.com/sveltejs/eslint-plugin-svelte3
+    // {files: ['*-test.js', '*.spec.js'], rules: {'no-unused-expressions': 'off'}} // https://eslint.org/docs/user-guide/configuring#disabling-rules-only-for-a-group-of-files
   ]
 }

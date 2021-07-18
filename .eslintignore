@@ -1,5 +1,8 @@
 public/
 userscripts/
 github/
+output/
+bundle/
 HEAD.js
 META.js
+nodejs/
