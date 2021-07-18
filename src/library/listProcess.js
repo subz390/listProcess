@@ -22,18 +22,17 @@
  * @example
  * listProcess({
  *   promiseMethod: 'any',
- *   debug: true,
  *    // listObject: [{}, {}, {}],
  *    listObject: {a: {}, b: {}, c: {}},
- *    itemProcessor: (resolve, reject, key, item, debug) => {
- *      debug && console.log(key, item)
+ *    itemProcessor: (resolve, reject, key, item) => {
+ *      // console.log(key, item)
  *      // return reject(new Error(`some error: ${key}`))
- *      // what you return resolve here gets passed to listProcess().then({key, debug, message})
+ *      // what you return resolve here gets passed to listProcess().then({key, message})
  *      // if `promiseMethod: 'all'` .then(resultArray) is an array of returned resolves from each of the above
- *      return resolve({key: key, debug: debug, message: ''})
+ *      return resolve({key: key, message: ''})
  *    }
  *  })
- *  .then(({key, debug, message}) => {debug && console.log(`key ${key}`)})
+ *  .then(({key, message}) => {console.log(`key ${key}`)})
  *  .catch((reason) => {
  *    // when all Promise items fail to match you get an errors object
  *    if (reason.errors) {console.log(`Promise.any: rejected with\n${reason.errors.map(({message}) => message).join('\n')}`)}

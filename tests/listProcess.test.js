@@ -8,7 +8,7 @@ import {consoleMock} from './jestHelpers.js'
 // https://stackoverflow.com/questions/52625979/confused-about-usebuiltins-option-of-babel-preset-env-using-browserslist-integ
 // https://stackoverflow.com/questions/62087809/babel-usebuiltins-usage-failing-with-core-js-3
 import 'core-js/stable'
-// https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime
+// https://github.com/facebook/regenerator/tree/master/packages/
 import 'regenerator-runtime/runtime'
 
 // ================================================================================
