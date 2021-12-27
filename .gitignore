@@ -6,6 +6,7 @@ node_modules/
 userscripts/
 .vscode
 coverage/
+.files/
 
 # FILES
 yarn.lock

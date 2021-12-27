@@ -40,3 +40,18 @@ module.exports = {
     // {files: ['*-test.js', '*.spec.js'], rules: {'no-unused-expressions': 'off'}} // https://eslint.org/docs/user-guide/configuring#disabling-rules-only-for-a-group-of-files
   ]
 }
+
+/*
+===================
+Use a JS type file instead of a JSON file because JS files can have comments
+Which are essential for maintaining information and references with the configuration itself
+
+===================
+Name file to .eslintrc.cjs when package.json contains "type":"module" so that eslint can load the configuration file
+When you get this type of error:
+  Cannot read config file: C:\Users<path>
+  Error: Must use import to load ES Module: C:\Users<path>
+  require() of ES modules is not supported.
+  require() of C:\Users<path> from C:\Users\<path> is an ES module file as it is a .js file whose nearest parent package.json contains "type": "module" which defines all .js files in that package scope as ES modules.
+  Instead rename .eslintrc.js to end in .cjs, change the requiring code to use import(), or remove "type": "module" from C:\Users\<path>\package.json.
+*/
