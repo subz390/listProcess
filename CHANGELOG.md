@@ -1,8 +1,8 @@
 # CHANGELOG
 
 # 211227
+- 1.4.0 rename `debug` property to `debugNoTreeshake`
 - 1.3.4 upgrade devDependencies and Jest tests
-
 
 ## 210107
 - 1.3.3 refactor polyfill configuration

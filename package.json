@@ -1,6 +1,6 @@
 {
   "name": "listprocess",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "Learn how to unit test pure Promise based functions with Jest",
   "main": "./src/index.js",
   "author": "SubZ390 <11546815+subz390@users.noreply.github.com> (https://github.com/subz390)",
