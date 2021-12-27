@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 211227
+- 1.3.4 upgrade devDependencies and Jest tests
+
+
 ## 210107
 - 1.3.3 refactor polyfill configuration
 - 1.3.2 `yarn add --dev core-js` for Promise polyfill on old NodeJS

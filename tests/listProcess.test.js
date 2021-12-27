@@ -1,5 +1,5 @@
 import {listProcess} from '../src/library/listProcess.js'
-import {consoleMock} from './jestHelpers.js'
+import {consoleMock} from './consoleMock.js'
 
 // Support old NodeJS installations with polyfills where needed
 // yarn add --dev core-js regenerator-runtime
@@ -11,13 +11,16 @@ import 'core-js/stable'
 // https://github.com/facebook/regenerator/tree/master/packages/
 import 'regenerator-runtime/runtime'
 
-// ================================================================================
-// TEST NOTES
-// all the returns are to pass the Promise back up through the function calling chain
-// so if you find the listProcess.then((response)=>{}) function isn't being called it's because listProcess wasn't returned to test
-// and test didn't async await internally for listProcess, and so went ahead and terminated it's process before listProcess finished doing it's thing
-// so returning the listProcess to test, test now has a reference to it's async Promise and will await for the process to resolve and finally return
-// so add returns all the way through the flow to the end
+
+/**
+ * NOTES:
+ * all the returns are to pass the Promise back up through the function calling chain
+ * so if you find the listProcess.then((response)=>{}) function isn't being called it's because listProcess wasn't returned to test
+ * and test didn't async await internally for listProcess, and so went ahead and terminated it's process before listProcess finished doing it's thing
+ * so returning the listProcess to test, test now has a reference to it's async Promise and will await for the process to resolve and finally return
+ * so add returns all the way through the flow to the end
+ */
+
 
 // ================================================================================
 // GLOBAL TEST VALUES
@@ -34,13 +37,13 @@ const listObject = {
 }
 
 // this function is called for each item in the listArray or listObject
-function itemProcessor(resolve, reject, key, item, debug) {
-  debug && console.log(item)
+function itemProcessor(resolve, reject, key, item, debugNoTreeshake) {
+  debugNoTreeshake && console.log(item)
   if (item.delay === -1) {
     return reject(new Error(`error: ${item.message}`))
   }
-  setTimeout(() => {return resolve({key: key, message: item.message, debug: debug})}, item.delay)
-  // what you return here gets passed to listProcess().then({key, debug, message})
+  setTimeout(() => {return resolve({key: key, message: item.message, debugNoTreeshake: debugNoTreeshake})}, item.delay)
+  // what you return here gets passed to listProcess().then({key, debugNoTreeshake, message})
   // if `promiseMethod: 'all'` .then(resultArray) is an array of returned resolves from each of the above
 }
 
@@ -129,44 +132,40 @@ describe('parameter validation', () => {
       })
     })
   })
-  describe('debug property undefined default', () => {
+  describe('debugNoTreeshake property undefined default', () => {
     const logArray = consoleMock('log')
     test('should not console.log messages', () => {
       return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor})
       .then((response) => {
         return expect(logArray.length === 0).toBe(true)
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
-    test('should pass falsy debug property to final result', () => {
+    test('should pass falsy debugNoTreeshake property to final result', () => {
       return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor})
       .then((response) => {
-        return expect(response.debug).toBeFalsy()
+        return expect(response.debugNoTreeshake).toBeFalsy()
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
-  describe('when the debug property defined falsy', () => {
+  describe('when the debugNoTreeshake property defined falsy', () => {
     const logArray = consoleMock('log')
     test('should not console.log messages', () => {
-      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         return expect(logArray.length === 0).toBe(true)
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
-    test('should pass falsy debug property to final result', () => {
-      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debug: false})
+    test('should pass falsy debugNoTreeshake property to final result', () => {
+      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
-        return expect(response.debug).toBeFalsy()
+        return expect(response.debugNoTreeshake).toBeFalsy()
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
-  describe('when the debug property defined truthy', () => {
+  describe('when the debugNoTreeshake property defined truthy', () => {
     const logArray = consoleMock('log')
     test('should console.log a message for each time itemProcessor is called', () => {
-      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debug: true})
+      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: true})
       .then((response) => {
         // messages are popped off the end of logArray, so in reverse order to when they were logged
         // therefore we iterate from end to start of the listArray to be aligned for the expect comparison
@@ -174,14 +173,12 @@ describe('parameter validation', () => {
           return expect(logArray.pop()).toMatchObject(listArray[index])
         }
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
-    test('should pass default debug = true through to final result', () => {
-      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debug: true})
+    test('should pass default debugNoTreeshake = true through to final result', () => {
+      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: true})
       .then((response) => {
-        return expect(response.debug).toBeTruthy()
+        return expect(response.debugNoTreeshake).toBeTruthy()
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
 })
@@ -191,7 +188,7 @@ describe('parameter validation', () => {
 describe('minimum for 100% coverage', () => {
   describe('Promise `all` method', () => {
     test('when listObject is an Array, first reject', () => {
-      return listProcess({promiseMethod: 'all', listObject: listArray, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'all', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         throw new Error('This test failed because the `all` method in this case is expected return a rejected Promise first')
       })
@@ -202,13 +199,12 @@ describe('minimum for 100% coverage', () => {
     test('when listObject is an Object, all resolved', () => {
       const allResult = []
       for (const [key, item] of Object.entries(listObject)) {
-        allResult.push({key: key, message: item.message, debug: false})
+        allResult.push({key: key, message: item.message, debugNoTreeshake: false})
       }
-      return listProcess({promiseMethod: 'all', listObject: listObject, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'all', listObject: listObject, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         return expect(response).toMatchObject(allResult)
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
 })
@@ -229,50 +225,46 @@ describe('remaining typical use case methods', () => {
         else {
           allSettledResult.push({
             status: 'fulfilled',
-            value: {key: key, message: item.message, debug: false}
+            value: {key: key, message: item.message, debugNoTreeshake: false}
           })
         }
       }
-      return listProcess({promiseMethod: 'allSettled', listObject: listArray, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'allSettled', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         return expect(response).toMatchObject(allSettledResult)
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
     test('when listObject is an Object', () => {
       const allSettledResult = []
       for (const [key, item] of Object.entries(listObject)) {
         allSettledResult.push({
           status: 'fulfilled',
-          value: {key: key, message: item.message, debug: false}})
+          value: {key: key, message: item.message, debugNoTreeshake: false}})
       }
-      return listProcess({promiseMethod: 'allSettled', listObject: listObject, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'allSettled', listObject: listObject, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         return expect(response).toMatchObject(allSettledResult)
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
   describe('Promise `any` method', () => {
     test('when listObject is an Array', () => {
-      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'any', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
-        return expect(response).toMatchObject({key: '0', message: listArray[0].message, debug: false})
+        return expect(response).toMatchObject({key: '0', message: listArray[0].message, debugNoTreeshake: false})
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
     test('when listObject is an Object', () => {
-      return listProcess({promiseMethod: 'any', listObject: listObject, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'any', listObject: listObject, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         const firstPropertyName = Object.keys(listObject)[0]
-        return expect(response).toMatchObject({key: firstPropertyName, message: listObject[firstPropertyName].message, debug: false})
+        return expect(response).toMatchObject({key: firstPropertyName, message: listObject[firstPropertyName].message, debugNoTreeshake: false})
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
   describe('Promise `race` method', () => {
     test('when listObject is an Array', () => {
-      return listProcess({promiseMethod: 'race', listObject: listArray, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'race', listObject: listArray, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         throw new Error('This test failed because the `race` method in this case, should return a rejected Promise first')
       })
@@ -281,12 +273,11 @@ describe('remaining typical use case methods', () => {
       })
     })
     test('when listObject is an Object', () => {
-      return listProcess({promiseMethod: 'race', listObject: listObject, itemProcessor: itemProcessor, debug: false})
+      return listProcess({promiseMethod: 'race', listObject: listObject, itemProcessor: itemProcessor, debugNoTreeshake: false})
       .then((response) => {
         const firstPropertyName = Object.keys(listObject)[0]
-        return expect(response).toMatchObject({key: firstPropertyName, message: listObject[firstPropertyName].message, debug: false})
+        return expect(response).toMatchObject({key: firstPropertyName, message: listObject[firstPropertyName].message, debugNoTreeshake: false})
       })
-      .catch((error) => {return expect(error).toBe(undefined)})
     })
   })
 })
