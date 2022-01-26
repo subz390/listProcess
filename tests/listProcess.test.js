@@ -1,7 +1,8 @@
-import {listProcess} from '../src/library/listProcess.js'
-import {consoleMock} from './consoleMock.js'
+import {consoleMock, listProcess} from './_index.js'
 
-// Support old NodeJS installations with polyfills where needed
+
+// Add support for old NodeJS installations with polyfills where needed
+// if you're running the latest version of NodeJS you don't need this
 // yarn add --dev core-js regenerator-runtime
 // https://github.com/zloirock/core-js/blob/master/docs/2019-03-19-core-js-3-babel-and-a-look-into-the-future.md#babel
 // https://babeljs.io/docs/en/babel-preset-env#corejs

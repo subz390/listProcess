@@ -17,6 +17,3 @@
 - 1.2.3 add `index.js` and `serve` script
 - 1.2.2 add `express` dependency package
 - 1.2.1 add `test:coverage` script to generate coverage report
-
-
-git rm -r --cached ./.files ./coverage
