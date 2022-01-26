@@ -1,5 +1,8 @@
 # CHANGELOG
 
+# 220126
+- 1.4.1 add common exports `./tests/_index.js` for tests root folder imports.
+
 # 211227
 - 1.4.0 rename `debug` property to `debugNoTreeshake`
 - 1.3.4 upgrade devDependencies and Jest tests
